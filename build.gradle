@@ -1,0 +1,51 @@
+buildscript {
+    ext{
+//        springBootVersion = '2.1.7.RELEASE' 오래되어서.... 내려간 거 같다
+        springBootVersion = '2.1.7.RELEASE'
+    }
+    repositories{
+        mavenCentral()
+        jcenter()   // is deprecated 2022.2.1~
+    }
+    dependencies{
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+// 자바, 스프링부터 사용을 위한 필수 플러그인
+apply plugin : 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management' // 스프링부트의 의존성 관리 플러그인
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+// 참고 : https://namsick96.github.io/build%20tool/Gradle_version_change_at_Intellij/
+// default 설정은 7.1로 추정
+// 교재의 gradle 버전은 4.8~4.10.2
+//sourceCompatibility = 1.8
+//dependencies {
+//    testCompile group : 'junit', name: 'junit', version: '4.12'
+//}
+dependencies {
+//    implementation 'org.springframework.boot:spring-boot:2.6.4'
+//    dependancy를 통해 추가할 경우, 코드 하나 생성
+//  https://stackoverflow.com/questions/23796404/could-not-find-method-compile-for-arguments-gradle
+//  compile('org.springframework.boot:spring-boot-starter-web')
+//    testCompile('org.springframework.boot:spring-boot-starter-test')
+// compile, runtime, testCompile, testRuntime 은 Gradle 4.10 (2018.8.27)에서 deprecate
+// implementation, runtimeonly, testImplementation, testRuntimeOnly로 대체
+    implementation('org.springframework.boot:spring-boot-starter-web')
+    testImplementation('org.springframework.boot:spring-boot-starter-test')
+
+//    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+//    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+}
+
+test {
+    useJUnitPlatform()
+}
